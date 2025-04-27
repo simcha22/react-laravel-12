@@ -45,6 +45,7 @@ export interface User {
 export interface Task {
     id: number;
     name: string;
+    due_date?: string;
     is_completed: boolean;
     created_at: string;
     updated_at: string;
