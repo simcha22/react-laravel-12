@@ -9,8 +9,10 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
+
     })->name('dashboard');
+
+    Route::get('dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
 
     Route::resource('tasks', \App\Http\Controllers\TaskController::class);
     Route::resource('task-categories', \App\Http\Controllers\TaskCategoryController::class);
