@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Task extends Model implements HasMedia
 {
@@ -35,7 +36,11 @@ class Task extends Model implements HasMedia
         if ($this->relationLoaded('media')) {
             return $this->getFirstMedia();
         }
-
         return null;
+    }
+
+    public function taskCategories(): BelongsToMany
+    {
+        return $this->belongsToMany(TaskCategory::class);
     }
 }

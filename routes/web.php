@@ -13,6 +13,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::resource('tasks', \App\Http\Controllers\TaskController::class);
+    Route::resource('task-categories', \App\Http\Controllers\TaskCategoryController::class);
 });
 
 
