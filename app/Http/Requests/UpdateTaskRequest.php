@@ -15,8 +15,9 @@ class UpdateTaskRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'is_completed' => ['boolean'],
+            'is_completed' => ['required','boolean'],
             'due_date' => ['nullable', 'date'],
+            'media' => ['nullable', 'file', 'max:10240'],
         ];
     }
 }

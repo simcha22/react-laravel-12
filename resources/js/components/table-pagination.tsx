@@ -21,7 +21,7 @@ export function TablePagination({ resource }: { resource: PaginatedResponse }) {
                     }
                 </PaginationItem>
 
-                {generatePaginationLinks(resource.current_page, resource.last_page, resource.path, resource.links)}
+                {generatePaginationLinks(resource.current_page, resource.last_page, resource.path)}
 
                 <PaginationItem>
                     {resource.next_page_url

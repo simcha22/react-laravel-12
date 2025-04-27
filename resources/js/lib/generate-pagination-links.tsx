@@ -1,19 +1,13 @@
 import { PaginationEllipsis, PaginationItem, PaginationLink } from '@/components/ui/pagination';
 import { JSX } from 'react';
 
-type PaginationLink = {
-    url: string;
-    label: string;
-}
-
-export const generatePaginationLinks = (currentPage: number, totalPages: number, path: string,  links: PaginationLink[], pageQuery: string = '?page=') => {
+export const generatePaginationLinks = (currentPage: number, totalPages: number, path: string, pageQuery: string = '?page=') => {
     const pages: JSX.Element[] = [];
-    console.log(links)
     if (totalPages <= 6) {
         for (let i = 1; i <= totalPages; i++) {
             pages.push(
                 <PaginationItem key={i}>
-                    <PaginationLink href={links[i].url} isActive={i === currentPage}>
+                    <PaginationLink href={path + pageQuery + i} isActive={i === currentPage}>
                         {i}
                     </PaginationLink>
                 </PaginationItem>,
@@ -23,7 +17,7 @@ export const generatePaginationLinks = (currentPage: number, totalPages: number,
         for (let i = 1; i <= 2; i++) {
             pages.push(
                 <PaginationItem key={i}>
-                    <PaginationLink href={links[i].url} isActive={i === currentPage}>
+                    <PaginationLink href={path + pageQuery + i} isActive={i === currentPage}>
                         {i}
                     </PaginationLink>
                 </PaginationItem>,
@@ -43,7 +37,7 @@ export const generatePaginationLinks = (currentPage: number, totalPages: number,
         for (let i = totalPages - 1; i <= totalPages; i++) {
             pages.push(
                 <PaginationItem key={i}>
-                    <PaginationLink href={links[i].url} isActive={i === currentPage}>
+                    <PaginationLink href={path + pageQuery + i} isActive={i === currentPage}>
                         {i}
                     </PaginationLink>
                 </PaginationItem>,
