@@ -8,6 +8,7 @@ import { FormEventHandler,useRef } from 'react';
 import { format } from 'date-fns';
 import { type BreadcrumbItem, type TaskCategory } from '@/types';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard' },
@@ -55,6 +56,8 @@ export default function Create({ categories }: { categories: TaskCategory[] }) {
             <Head title="Create Task" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <form onSubmit={createTask} className="space-y-6">
+                    <Card>
+                        <CardContent className="space-y-6 grid grid-cols-3 gap-4">
                     <div className="grid gap-2">
                         <Label htmlFor="name">Task Name *</Label>
 
@@ -116,9 +119,11 @@ export default function Create({ categories }: { categories: TaskCategory[] }) {
                         <InputError message={errors.media} />
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        <Button disabled={processing}>Create Task</Button>
-                    </div>
+                        </CardContent>
+                        <CardFooter>
+                            <Button disabled={processing}>Create Task</Button>
+                        </CardFooter>
+                    </Card>
                 </form>
             </div>
         </AppLayout>
