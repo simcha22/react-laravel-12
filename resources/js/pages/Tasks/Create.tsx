@@ -6,7 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { FormEventHandler,useRef } from 'react';
 import { format } from 'date-fns';
-import { type BreadcrumbItem } from '@/types';
+import { type BreadcrumbItem, type TaskCategory } from '@/types';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard' },
@@ -18,15 +19,17 @@ type CreateTaskForm = {
     name?: string;
     due_date?: string;
     media?: string,
+    categories?: string[];
 }
 
-export default function Create() {
+export default function Create({ categories }: { categories: TaskCategory[] }) {
     const taskName = useRef<HTMLInputElement>(null);
 
     const { data, setData, errors, post, reset, processing,progress } = useForm<Required<CreateTaskForm>>({
         name: '',
         due_date: '',
         media: '',
+        categories: [],
     });
 
     const createTask: FormEventHandler = (e) => {
@@ -76,6 +79,20 @@ export default function Create() {
                             className="mt-1 block w-full"
                             type="date"
                         />
+
+                        <InputError message={errors.due_date} />
+                    </div>
+
+                    <div className="grid gap-2">
+                        <Label htmlFor="due_date">Categories</Label>
+
+                        <ToggleGroup type="multiple" variant={'outline'} size={'lg'} value={data.categories} onValueChange={(value) => setData('categories', value)}>
+                            {categories.map((category) => (
+                                <ToggleGroupItem key={category.id} value={category.id.toString()}>
+                                    {category.name}
+                                </ToggleGroupItem>
+                            ))}
+                        </ToggleGroup>
 
                         <InputError message={errors.due_date} />
                     </div>

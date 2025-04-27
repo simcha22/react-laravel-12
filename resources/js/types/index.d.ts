@@ -48,6 +48,7 @@ export interface Task {
     due_date?: string;
     is_completed: boolean;
     mediaFile?: MediaFile;
+    task_categories: TaskCategory[];
     created_at: string;
     updated_at: string;
 }

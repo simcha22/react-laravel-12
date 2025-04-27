@@ -3,7 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem, type Task } from '@/types';
+import { type BreadcrumbItem, type Task, type TaskCategory } from '@/types';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Head,router, useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
 import { Switch } from '@/components/ui/switch';
@@ -14,6 +15,7 @@ type EditTaskForm = {
     is_completed: boolean;
     due_date?: string;
     media?: string;
+    categories: string[];
 };
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -22,14 +24,15 @@ const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Edit', href: '' },
 ];
 
-export default function Edit({ task }: { task: Task }) {
+export default function Edit({ task, categories }: { task: Task, categories: TaskCategory[] }) {
     const taskName = useRef<HTMLInputElement>(null);
 
-    const { data, setData, errors, put, reset, processing, progress } = useForm<Required<EditTaskForm>>({
+    const { data, setData, errors, reset, processing, progress } = useForm<Required<EditTaskForm>>({
         name: task.name,
         is_completed: task.is_completed,
         due_date: task.due_date,
         media: '',
+        categories: task.task_categories.map((category) => category.id.toString()),
     });
 
     const editTask: FormEventHandler = (e) => {
@@ -91,6 +94,21 @@ export default function Edit({ task }: { task: Task }) {
                         <Switch checked={data.is_completed} onCheckedChange={() => setData('is_completed', !data.is_completed)} />
 
                         <InputError message={errors.is_completed} />
+                    </div>
+
+                    <div className="grid gap-2">
+                        <Label htmlFor="due_date">Categories</Label>
+
+                        <ToggleGroup type="multiple" variant={'outline'} size={'lg'} value={data.categories}
+                                     onValueChange={(value) => setData('categories', value)}>
+                            {categories.map((category) => (
+                                <ToggleGroupItem key={category.id} value={category.id.toString()}>
+                                    {category.name}
+                                </ToggleGroupItem>
+                            ))}
+                        </ToggleGroup>
+
+                        <InputError message={errors.due_date} />
                     </div>
 
                     <div className="grid gap-2">
